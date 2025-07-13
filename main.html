@@ -1,5 +1,3 @@
-</body>
-</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +22,6 @@
       100% {background-position: 0% 50%;}
     }
 
-    /* Intro Screen */
     #introScreen {
       position: fixed;
       top: 0; left: 0;
@@ -62,12 +59,19 @@
       text-shadow: 0 0 10px #00ffff;
       animation: fadeInText 2s ease infinite alternate;
     }
+    #nowPlaying {
+      font-size: 14px;
+      margin-top: 10px;
+      color: #ffcc00;
+      text-shadow: 0 0 10px #ffcc00;
+      animation: pulseText 2s infinite;
+    }
+
     @keyframes fadeInText {
       from { opacity: 0.3; }
       to { opacity: 1; }
     }
 
-    /* TopBar Time/Battery */
     #topBar {
       position: absolute;
       top: 10px;
@@ -141,7 +145,6 @@
     .btn:nth-child(2) { animation-delay: 0.3s; }
     .btn:nth-child(3) { animation-delay: 0.6s; }
     .btn:nth-child(4) { animation-delay: 0.9s; }
-    .btn:nth-child(5) { animation-delay: 1.2s; }
 
     @keyframes btnAppear {
       to {opacity: 1; transform: translateY(0);}
@@ -176,41 +179,50 @@
       color: #ccc;
       text-shadow: 0 0 8px #00ffff;
     }
+
+    audio {
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-<!-- Intro Screen -->
+<!-- Intro -->
 <div id="introScreen">
   <div id="introLogo"></div>
   <div class="introText">Site Loading...</div>
   <div class="introText">Wait...</div>
   <div class="introText">INCONNU BOY TECH site......</div>
+  <div id="nowPlaying">🎵 Now Playing...</div>
 </div>
 
-<!-- Heure et Batterie -->
+<!-- Audio autoplay -->
+<audio id="bgAudio" autoplay loop>
+  <source src="https://files.catbox.moe/m6wlp0.mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+
+<!-- Bar -->
 <div id="topBar">
   <div id="currentTime">00:00:00</div>
   <div id="batteryLevel">Battery: ...%</div>
 </div>
 
-<!-- Main Content -->
+<!-- Main -->
 <div class="container" id="mainContent">
-  <h1>WELCOME TO INCONNU TECH BOT SESSION</h1>
+  <h1>WELCOME TO INCONNU TECH SESSION</h1>
   <a href="/pair" target="_blank" class="btn">PAIR CODE</a>
   <a href="/qr" target="_blank" class="btn">QR CODE</a>
   <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="btn">FORK</a>
   <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn">WHATSAPP</a>
-
   <div id="visitorCount">Visitors: 0</div>
 </div>
 
-<footer>POWERED BY INCONNU BOYTECH © <span id="currentYear"></span></footer>
+<footer>POWERED BY INCONNU BOY TECH © <span id="currentYear"></span></footer>
 
 <script>
   document.getElementById("currentYear").textContent = new Date().getFullYear();
 
-  // Horloge
   function updateClock() {
     const now = new Date();
     const h = now.getHours().toString().padStart(2, '0');
@@ -221,7 +233,6 @@
   setInterval(updateClock, 1000);
   updateClock();
 
-  // Batterie
   if ('getBattery' in navigator) {
     navigator.getBattery().then(function(battery) {
       function updateBatteryStatus() {
@@ -234,16 +245,18 @@
     document.getElementById('batteryLevel').textContent = "Battery: N/A";
   }
 
-  // Visitors Counter Local
   let visits = localStorage.getItem('visitCount') || 0;
   visits++;
   localStorage.setItem('visitCount', visits);
   document.getElementById('visitorCount').textContent = "Visitors: " + visits;
 
-  // Hide Intro after 5s and show main content
+  // Show main content after intro
   setTimeout(() => {
     document.getElementById('introScreen').style.display = 'none';
     document.getElementById('mainContent').style.display = 'block';
+    document.getElementById('bgAudio').play().catch(() => {
+      console.log("Autoplay blocked by browser");
+    });
   }, 5000);
 </script>
 
