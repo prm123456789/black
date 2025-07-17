@@ -6,178 +6,78 @@
   <title>INCONNU PORTAL</title>
   <link rel="icon" href="https://files.catbox.moe/c6g5ui.jpg" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-
     body {
-      height: 100vh;
-      background: linear-gradient(-45deg, #1a1a1a, #000000, #1a1a1a, #000000);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      overflow: hidden;
-      color: #fff;
-    }
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
     }
 
-    #introScreen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      z-index: 999;
-      animation: fadeOutIntro 1s ease forwards;
-      animation-delay: 5s;
-    }
-    @keyframes fadeOutIntro {
-      to {opacity: 0; visibility: hidden;}
-    }
-    #introLogo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background-image: url('https://files.catbox.moe/c6g5ui.jpg');
-      background-size: cover;
-      margin-bottom: 20px;
-      animation: spin 2s linear infinite;
-      box-shadow: 0 0 20px #00ffff;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .introText {
-      color: #00ffff;
-      margin: 5px 0;
-      font-size: 18px;
-      text-shadow: 0 0 10px #00ffff;
-      animation: fadeInText 2s ease infinite alternate;
-    }
-    #nowPlaying {
-      font-size: 14px;
-      margin-top: 10px;
-      color: #ffcc00;
-      text-shadow: 0 0 10px #ffcc00;
-      animation: pulseText 2s infinite;
-    }
-
-    @keyframes fadeInText {
-      from { opacity: 0.3; }
-      to { opacity: 1; }
-    }
-
-    #topBar {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      right: 10px;
+    header {
+      background-color: #0066cc;
+      color: white;
+      padding: 16px 32px;
       display: flex;
       justify-content: space-between;
-      padding: 0 10px;
-      font-size: 14px;
-      text-shadow: 0 0 8px #00ffff;
-      z-index: 10;
-    }
-    #currentTime, #batteryLevel {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 6px 12px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #00ffff;
-      color: #00ffff;
-      font-weight: bold;
-      letter-spacing: 1px;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .container {
-      position: relative;
-      z-index: 2;
+    header img {
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
       text-align: center;
-      padding: 30px;
-      background: rgba(0, 0, 0, 0.5);
-      border-radius: 20px;
-      width: 90%;
-      max-width: 550px;
-      margin: 100px auto 50px;
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(0,255,255,0.2);
-      display: none;
     }
 
-    .container h1 {
-      text-shadow: 0 0 20px #00ffff;
-      margin-bottom: 25px;
-      font-size: 26px;
-      animation: pulseText 3s infinite;
-    }
-    @keyframes pulseText {
-      0%,100% {text-shadow: 0 0 15px #00ffff;}
-      50% {text-shadow: 0 0 30px #00ffff;}
+    main h1 {
+      margin-bottom: 24px;
+      font-size: 24px;
+      color: #0066cc;
     }
 
     .btn {
-      width: 220px;
-      padding: 14px 22px;
-      margin: 14px;
-      background-image: url('https://files.catbox.moe/c6g5ui.jpg');
-      background-size: cover;
-      border-radius: 30px;
-      border: 2px solid #fff;
-      color: #fff;
+      display: block;
+      width: 80%;
+      margin: 12px auto;
+      padding: 14px;
       font-size: 16px;
       font-weight: bold;
-      text-transform: uppercase;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4);
-      position: relative;
-      overflow: hidden;
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: btnAppear 1s forwards;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
     }
-    .btn:nth-child(2) { animation-delay: 0.3s; }
-    .btn:nth-child(3) { animation-delay: 0.6s; }
-    .btn:nth-child(4) { animation-delay: 0.9s; }
 
-    @keyframes btnAppear {
-      to {opacity: 1; transform: translateY(0);}
-    }
-    .btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.2);
-      transform: skewX(-45deg);
-      transition: all 0.5s;
-    }
-    .btn:hover::before { left: 100%; }
-    .btn:hover { box-shadow: 0 6px 30px rgba(255, 255, 255, 0.6); transform: scale(1.05); }
-
-    #visitorCount {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #00ffcc;
-      text-shadow: 0 0 10px #00ffcc;
+    .btn:hover {
+      background-color: #0056b3;
     }
 
     footer {
-      position: absolute;
-      bottom: 10px;
-      width: 100%;
       text-align: center;
+      margin-top: 40px;
+      padding: 10px;
       font-size: 12px;
-      color: #ccc;
-      text-shadow: 0 0 8px #00ffff;
+      color: #888;
+    }
+
+    #topBar {
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      background-color: #e6f0ff;
+      color: #333;
     }
 
     audio {
@@ -187,77 +87,61 @@
 </head>
 <body>
 
-<!-- Intro -->
-<div id="introScreen">
-  <div id="introLogo"></div>
-  <div class="introText">Site Loading...</div>
-  <div class="introText">Wait...</div>
-  <div class="introText">INCONNU BOY TECH site......</div>
-  <div id="nowPlaying">🎵 Now Playing...</div>
+<header>
+  <div>INCONNU PORTAL</div>
+  <img src="https://files.catbox.moe/c6g5ui.jpg" alt="Logo" />
+</header>
+
+<div id="topBar">
+  <span id="currentTime">00:00:00</span> | 
+  <span id="batteryLevel">Battery: ...%</span>
 </div>
 
-<!-- Audio autoplay -->
-<audio id="bgAudio" autoplay loop>
+<main>
+  <h1>WELCOME TO INCONNU TECH</h1>
+  <a href="/pair" target="_blank" class="btn">Pair Code</a>
+  <a href="/qr" target="_blank" class="btn">QR Code</a>
+  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="btn">Fork on GitHub</a>
+  <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn">Join WhatsApp</a>
+</main>
+
+<footer>Powered by INCONNU BOY TECH © <span id="currentYear"></span></footer>
+
+<audio id="bgAudio" loop>
   <source src="https://files.catbox.moe/m6wlp0.mp3" type="audio/mp3">
   Your browser does not support the audio element.
 </audio>
-
-<!-- Bar -->
-<div id="topBar">
-  <div id="currentTime">00:00:00</div>
-  <div id="batteryLevel">Battery: ...%</div>
-</div>
-
-<!-- Main -->
-<div class="container" id="mainContent">
-  <h1>WELCOME TO INCONNU TECH SESSION</h1>
-  <a href="/pair" target="_blank" class="btn">PAIR CODE</a>
-  <a href="/qr" target="_blank" class="btn">QR CODE</a>
-  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="btn">FORK</a>
-  <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn">WHATSAPP</a>
-  <div id="visitorCount">Visitors: 0</div>
-</div>
-
-<footer>POWERED BY INCONNU BOY TECH © <span id="currentYear"></span></footer>
 
 <script>
   document.getElementById("currentYear").textContent = new Date().getFullYear();
 
   function updateClock() {
     const now = new Date();
-    const h = now.getHours().toString().padStart(2, '0');
-    const m = now.getMinutes().toString().padStart(2, '0');
-    const s = now.getSeconds().toString().padStart(2, '0');
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
     document.getElementById('currentTime').textContent = `${h}:${m}:${s}`;
   }
   setInterval(updateClock, 1000);
   updateClock();
 
   if ('getBattery' in navigator) {
-    navigator.getBattery().then(function(battery) {
-      function updateBatteryStatus() {
+    navigator.getBattery().then(battery => {
+      function updateBattery() {
         document.getElementById('batteryLevel').textContent = "Battery: " + Math.round(battery.level * 100) + '%';
       }
-      updateBatteryStatus();
-      battery.addEventListener('levelchange', updateBatteryStatus);
+      updateBattery();
+      battery.addEventListener('levelchange', updateBattery);
     });
-  } else {
-    document.getElementById('batteryLevel').textContent = "Battery: N/A";
   }
 
-  let visits = localStorage.getItem('visitCount') || 0;
-  visits++;
-  localStorage.setItem('visitCount', visits);
-  document.getElementById('visitorCount').textContent = "Visitors: " + visits;
-
-  // Show main content after intro
-  setTimeout(() => {
-    document.getElementById('introScreen').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'block';
-    document.getElementById('bgAudio').play().catch(() => {
-      console.log("Autoplay blocked by browser");
-    });
-  }, 5000);
+  // Music starts on first interaction
+  document.body.addEventListener('click', () => {
+    const audio = document.getElementById('bgAudio');
+    if (audio.paused) {
+      audio.play().catch(err => console.log("Playback blocked:", err));
+    }
+  }, { once: true });
 </script>
 
 </body>
