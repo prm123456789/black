@@ -7,9 +7,7 @@
   <link rel="icon" href="https://files.catbox.moe/c6g5ui.jpg" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -27,6 +25,14 @@
       align-items: center;
       border-bottom: 1px solid #00d9ff44;
       box-shadow: 0 2px 12px #00d9ff22;
+    }
+
+    .menu-icon {
+      font-size: 24px;
+      cursor: pointer;
+      color: #00d9ff;
+      text-decoration: none;
+      margin-right: auto;
     }
 
     header img {
@@ -100,6 +106,7 @@
 <body>
 
 <header>
+  <a href="about.html" class="menu-icon">︙</a>
   <div>INCONNU PORTAL</div>
   <img src="https://files.catbox.moe/c6g5ui.jpg" alt="Logo" />
 </header>
@@ -113,7 +120,7 @@
   <h1>WELCOME TO INCONNU TECH</h1>
   <a href="/pair" target="_blank" class="btn">🔗 Pair Code</a>
   <a href="/qr" target="_blank" class="btn">📷 QR Code</a>
-  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="btn">🚀 Fork on GitHub</a>
+  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="btn">🚀 FORK INCONNU XD V2</a>
   <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn">💬 Join WhatsApp</a>
 </main>
 
@@ -123,7 +130,6 @@
 
 <audio id="bgAudio" loop>
   <source src="https://files.catbox.moe/m6wlp0.mp3" type="audio/mp3">
-  Your browser does not support the audio element.
 </audio>
 
 <script>
@@ -149,7 +155,6 @@
     });
   }
 
-  // Music starts on first interaction
   document.body.addEventListener('click', () => {
     const audio = document.getElementById('bgAudio');
     if (audio.paused) {
