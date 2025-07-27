@@ -5,169 +5,130 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>INCONNU XD PAIR CODE</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: url('https://files.catbox.moe/e1k73u.jpg') no-repeat center center fixed;
-      background-size: cover;
+      padding: 0;
+      height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      padding: 15px;
-      color: #ffffff;
+      align-items: center;
+      background: linear-gradient(135deg, #6e70ff, #a16eff);
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
     }
 
-    .container {
-      backdrop-filter: blur(15px);
-      background-color: rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
+    .card {
+      background-color: #ffffff;
       padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      width: 90%;
       max-width: 400px;
-      width: 100%;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
 
     .logo {
-      width: 70px;
-      height: 70px;
-      background: #000aff;
+      background: linear-gradient(to right, #25D366, #128C7E);
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
       border-radius: 50%;
       display: flex;
-      justify-content: center;
       align-items: center;
-      margin: 0 auto 16px;
-      font-size: 28px;
-      box-shadow: 0 0 15px #000aff;
+      justify-content: center;
+      font-size: 30px;
       color: white;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
     }
 
     .title {
-      text-align: center;
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #00ffff;
+      margin: 10px 0 5px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #222;
     }
 
     .subtitle {
-      text-align: center;
+      color: #666;
       font-size: 14px;
       margin-bottom: 20px;
-      color: #ddd;
     }
 
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 25px;
-    }
-
-    .social-icons a {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: #222;
-      color: #fff;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .social-icons a.youtube { background: #ff0000; }
-    .social-icons a.telegram { background: #0088cc; }
-    .social-icons a.whatsapp { background: #25d366; }
-    .social-icons a.github { background: #333; }
-
-    .social-icons a:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-    }
-
-    .input-label {
-      font-size: 13px;
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    .input-field {
+    input[type="tel"] {
       width: 100%;
       padding: 12px;
-      border-radius: 12px;
-      border: 1px solid #ffffff33;
-      background: rgba(255, 255, 255, 0.08);
-      color: white;
-      font-size: 14px;
+      border: 2px solid #25D366;
+      border-radius: 10px;
+      font-size: 16px;
       outline: none;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
+      background: #f9f9f9;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    input[type="tel"]:hover {
+      box-shadow: 0 0 10px #25D366;
+      transform: scale(1.02);
     }
 
     .generate-btn, .copy-btn {
       width: 100%;
       padding: 12px;
-      font-size: 14px;
-      font-weight: bold;
       border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      background: linear-gradient(135deg, #000aff, #4e00ff);
+      border-radius: 10px;
+      background: linear-gradient(to right, #00c853, #00796b);
       color: white;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
-      transition: transform 0.2s ease;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s;
     }
 
     .generate-btn:hover, .copy-btn:hover {
-      transform: translateY(-2px);
+      background: linear-gradient(to right, #00e676, #00bfa5);
+      transform: scale(1.05);
     }
 
     .code-display {
-      background: rgba(0, 0, 0, 0.4);
+      background: #e6f4ea;
       padding: 12px;
-      border-radius: 12px;
-      text-align: center;
+      border-radius: 10px;
+      margin-top: 15px;
       font-size: 15px;
       font-weight: 600;
-      color: #00ffff;
-      margin-bottom: 16px;
-      border: 1px solid #00ffff77;
+      color: #00695c;
+      border: 1px solid #25D366;
     }
 
     .copy-btn {
       display: none;
-      background: linear-gradient(135deg, #00ffae, #00bfff);
-      margin-bottom: 20px;
+      margin-top: 12px;
     }
 
     .loading {
-      text-align: center;
-      margin: 16px 0;
+      margin: 10px 0;
+      color: #00796b;
+      font-size: 20px;
     }
 
-    .loading i {
-      font-size: 22px;
-      color: #00bfff;
-      animation: spin 1s linear infinite;
+    .footer {
+      font-size: 12px;
+      margin-top: 20px;
+      color: #999;
     }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .error-message, .success-message {
-      font-size: 14px;
-      padding: 8px;
-    }
-
-    .error-message { color: #ff4d4d; }
-    .success-message { color: #00ffae; }
 
     #toast {
       display: none;
@@ -175,7 +136,7 @@
       bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      background: #00bfff;
+      background: #00bfa5;
       color: #000;
       padding: 12px 20px;
       border-radius: 8px;
@@ -184,39 +145,25 @@
       opacity: 0;
       transition: opacity 0.4s ease;
     }
-
-    .footer {
-      text-align: center;
-      font-size: 12px;
-      margin-top: 20px;
-      color: #ccc;
-    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo"><i class="fas fa-robot"></i></div>
+  <div class="card">
+    <div class="logo"><i class="fab fa-whatsapp"></i></div>
     <h1 class="title">INCONNU XD V2</h1>
-    <p class="subtitle">INCONNU XD PAIR CODE</p>
+    <p class="subtitle">Generate Pairing Code with Your WhatsApp Number</p>
 
-    <div class="social-icons">
-      <a href="https://www.youtube.com/@inconnuboytech-s1s" target="_blank" class="youtube"><i class="fab fa-youtube"></i></a>
-      <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="github"><i class="fab fa-github"></i></a>
-    </div>
-
-    <label class="input-label">Enter your WhatsApp number with country code</label>
-    <input type="tel" id="mobileNumber" class="input-field" placeholder="EX : 226XXXXXXX" />
+    <input type="tel" id="mobileNumber" placeholder="+226xxxxxxxx" />
 
     <button class="generate-btn" id="submit"><i class="fas fa-key"></i> Generate Pair Code</button>
 
-    <div class="loading" id="loading"><i class="fas fa-spinner"></i></div>
+    <div class="loading" id="loading"><i class="fas fa-spinner fa-spin"></i></div>
 
     <div class="code-display" id="codeDisplay">Your pair code will appear here</div>
 
     <button class="copy-btn" id="copy" onclick="copyCode()"><i class="fas fa-copy"></i> Copy Code</button>
 
-    <div class="footer">© 2025 MADE IN BY INCONNU BOY</div>
+    <div class="footer">© 2025 MADE BY INCONNU BOY</div>
   </div>
 
   <div id="toast">Code copied to clipboard!</div>
@@ -231,7 +178,7 @@
       const copyBtn = document.getElementById("copy");
 
       if (!mobileNumber) {
-        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Please enter your WhatsApp number</div>';
+        codeDisplay.innerHTML = '<div style="color:red;">❗ Please enter your WhatsApp number</div>';
         copyBtn.style.display = "none";
         return;
       }
@@ -245,14 +192,14 @@
         const code = response.data.code || "Service Unavailable";
 
         if (code === "Service Unavailable") {
-          codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Service Unavailable</div>';
+          codeDisplay.innerHTML = '<div style="color:red;">❗ Service Unavailable</div>';
         } else {
-          codeDisplay.innerHTML = `<div class="success-message"><i class="fas fa-check-circle"></i> CODE: ${code}</div>`;
+          codeDisplay.innerHTML = `<div style="color:green;"><strong>CODE:</strong> ${code}</div>`;
           copyBtn.style.display = "block";
         }
       } catch (error) {
         console.error(error);
-        codeDisplay.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-circle"></i> Error generating code</div>';
+        codeDisplay.innerHTML = '<div style="color:red;">❗ Error generating code</div>';
       } finally {
         loadingSpinner.style.display = "none";
       }
