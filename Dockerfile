@@ -1,26 +1,29 @@
-# Utiliser une version Debian stable encore supportée
+# Utiliser une image officielle Node.js stable
 FROM node:lts-bullseye
 
-# Mise à jour et installation des dépendances système
+# Mise à jour des paquets système + installation utilitaires
 RUN apt-get update && \
-  apt-get install -y ffmpeg imagemagick webp && \
-  apt-get upgrade -y && \
-  rm -rf /var/lib/apt/lists/*
+    apt-get install -y ffmpeg imagemagick webp && \
+    apt-get upgrade -y && \
+    rm -rf /var/lib/apt/lists/*
 
 # Définir le répertoire de travail
 WORKDIR /usr/src/app
 
-# Copier le fichier de dépendances et installer
+# Copier uniquement le fichier des dépendances
 COPY package.json .
 
-# Installer les dépendances Node.js (incluant qrcode-terminal et pm2)
-RUN npm install && npm install -g qrcode-terminal pm2
+# Installer les dépendances Node.js avec contournement peer-deps
+RUN npm install --legacy-peer-deps
+
+# Installer les outils globaux séparément
+RUN npm install -g qrcode-terminal pm2
 
 # Copier le reste du code source
 COPY . .
 
-# Exposer le port utilisé par ton app
+# Exposer le port utilisé par l'app (assure-toi que c’est bien 5000 dans ton code)
 EXPOSE 5000
 
-# Lancer l'application
+# Commande pour lancer l'app
 CMD ["npm", "start"]
