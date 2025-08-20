@@ -1,7 +1,7 @@
 {
   "name": "DARK-NOVA-XMD-web-pair",
   "version": "0.0.1",
-  "description": "A multi functional whatsapp bot Web paircode.",
+  "description": "A multi functional WhatsApp bot Web paircode.",
   "main": "index.js",
   "scripts": {
     "start": "pm2 start index.js --deep-monitoring --attach --name DARK-NOVA-XMD",
@@ -23,7 +23,11 @@
     "@eslint/config-array": "^0.21.0",
     "@eslint/object-schema": "^2.1.6",
     "eslint": "^9.33.0",
+    "mongoose": "^7.6.1",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
