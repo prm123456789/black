@@ -101,6 +101,114 @@
     audio {
       display: none;
     }
+
+    /* Styles pour la section commentaires */
+    #comments-section {
+      margin-top: 40px;
+      padding: 20px;
+      background: rgba(15, 15, 15, 0.8);
+      border-radius: 12px;
+      border: 1px solid #00d9ff44;
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.2);
+    }
+
+    #comments-section h2 {
+      margin-bottom: 20px;
+      text-shadow: 0 0 6px #00d9ff66;
+    }
+
+    #comment-form input,
+    #comment-form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: #0a0a0a;
+      border: 1px solid #00d9ff66;
+      border-radius: 8px;
+      color: #00d9ff;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    #comment-form textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    #comment-form button {
+      width: 100%;
+      padding: 14px;
+      background: #00d9ff;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px #00d9ff88;
+    }
+
+    #comment-form button:hover {
+      background: #00b0cc;
+      box-shadow: 0 0 20px #00d9ff;
+    }
+
+    #comments-container {
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 10px;
+      margin-top: 20px;
+    }
+
+    .comment {
+      padding: 15px;
+      margin-bottom: 15px;
+      background: rgba(10, 10, 10, 0.7);
+      border-radius: 8px;
+      border: 1px solid #00d9ff33;
+      position: relative;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .like-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      color: #00d9ff;
+      font-family: 'Orbitron', sans-serif;
+      padding: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .like-btn:hover {
+      transform: scale(1.1);
+      color: #ff3366;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Style de la barre de défilement */
+    #comments-container::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    #comments-container::-webkit-scrollbar-track {
+      background: rgba(0, 217, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    #comments-container::-webkit-scrollbar-thumb {
+      background: #00d9ff;
+      border-radius: 10px;
+    }
+
+    #comments-container::-webkit-scrollbar-thumb:hover {
+      background: #00b0cc;
+    }
   </style>
 </head>
 <body>
@@ -122,6 +230,24 @@
   <a href="/qr" target="_blank" class="btn">📷 QR Code</a>
   <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="btn">🚀 FORK INCONNU XD V2</a>
   <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn">💬 Join WhatsApp</a>
+
+  <!-- Section Commentaires Live -->
+  <section id="comments-section">
+    <h2>💬 COMMENTAIRES LIVE</h2>
+    
+    <!-- Formulaire de commentaire -->
+    <form id="comment-form">
+      <input type="text" id="nomDev" placeholder="Nom Dev" required>
+      <input type="text" id="numOrGmail" placeholder="Num ou Gmail" required>
+      <textarea id="commentaire" placeholder="Votre commentaire..." required></textarea>
+      <button type="submit">POSTER LE COMMENTAIRE</button>
+    </form>
+    
+    <!-- Liste des commentaires -->
+    <div id="comments-container">
+      <!-- Les commentaires seront chargés ici -->
+    </div>
+  </section>
 </main>
 
 <footer>
@@ -132,6 +258,8 @@
   <source src="https://files.catbox.moe/m6wlp0.mp3" type="audio/mp3">
 </audio>
 
+<!-- Socket.io Client -->
+<script src="/socket.io/socket.io.js"></script>
 <script>
   document.getElementById("currentYear").textContent = new Date().getFullYear();
 
@@ -161,7 +289,99 @@
       audio.play().catch(err => console.log("Playback blocked:", err));
     }
   }, { once: true });
-</script>
 
+  // Connexion à Socket.io
+  const socket = io();
+  
+  // Éléments DOM
+  const commentForm = document.getElementById('comment-form');
+  const commentsContainer = document.getElementById('comments-container');
+  
+  // Charger les commentaires existants
+  fetch('/api/comments')
+    .then(response => response.json())
+    .then(comments => {
+      comments.forEach(comment => {
+        addCommentToDOM(comment);
+      });
+    })
+    .catch(error => console.error('Erreur:', error));
+  
+  // Écouter les nouveaux commentaires
+  socket.on('new-comment', (comment) => {
+    addCommentToDOM(comment);
+  });
+  
+  // Écouter les mises à jour de likes
+  socket.on('like-updated', (data) => {
+    const likeCount = document.querySelector(`.like-count[data-id="${data.id}"]`);
+    if (likeCount) {
+      likeCount.textContent = data.likes;
+    }
+  });
+  
+  // Soumission du formulaire
+  commentForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const commentData = {
+      nomDev: document.getElementById('nomDev').value,
+      numOrGmail: document.getElementById('numOrGmail').value,
+      commentaire: document.getElementById('commentaire').value
+    };
+    
+    fetch('/api/comments', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(commentData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        // Réinitialiser le formulaire
+        commentForm.reset();
+      }
+    })
+    .catch(error => console.error('Erreur:', error));
+  });
+  
+  // Fonction pour ajouter un commentaire au DOM
+  function addCommentToDOM(comment) {
+    const commentElement = document.createElement('div');
+    commentElement.classList.add('comment');
+    
+    commentElement.innerHTML = `
+      <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+        <strong style="color: #00d9ff; text-shadow: 0 0 4px #00d9ff66;">${comment.nomDev}</strong>
+        <span style="color: #00d9ffaa; font-size: 0.9em;">${comment.numOrGmail}</span>
+      </div>
+      <p style="margin: 0 0 12px 0; color: #00d9ffdd; line-height: 1.4;">${comment.commentaire}</p>
+      <div style="display: flex; align-items: center;">
+        <button class="like-btn" data-id="${comment._id}">
+          ❤️ <span class="like-count" data-id="${comment._id}" style="margin-left: 5px;">${comment.likes || 0}</span>
+        </button>
+      </div>
+    `;
+    
+    // Ajouter l'événement like
+    const likeBtn = commentElement.querySelector('.like-btn');
+    likeBtn.addEventListener('click', () => {
+      fetch(`/api/comments/${comment._id}/like`, { method: 'POST' })
+        .catch(error => console.error('Erreur:', error));
+    });
+    
+    // Ajouter au début de la liste pour un effet de flux
+    if (commentsContainer.firstChild) {
+      commentsContainer.insertBefore(commentElement, commentsContainer.firstChild);
+    } else {
+      commentsContainer.appendChild(commentElement);
+    }
+    
+    // Animation de défilement fluide
+    commentsContainer.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
 </body>
 </html>
