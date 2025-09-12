@@ -1,39 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>INCONNU PORTAL</title>
   <link rel="icon" href="https://files.catbox.moe/c6g5ui.jpg" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --neon-blue: #00d9ff;
+      --neon-purple: #bd00ff;
+      --dark-bg: #0a0a0a;
+      --darker-bg: #050505;
+    }
 
     body {
       margin: 0;
       font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(135deg, #0a0a0a, #111);
-      color: #00d9ff;
+      background: var(--darker-bg);
+      color: var(--neon-blue);
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Effet de grille futuriste en arrière-plan */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(rgba(10, 10, 10, 0.9), rgba(10, 10, 10, 0.9)),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 217, 255, 0.05) 2px, rgba(0, 217, 255, 0.05) 4px),
+        repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0, 217, 255, 0.05) 2px, rgba(0, 217, 255, 0.05) 4px);
+      z-index: -2;
+    }
+
+    /* Effet de lueur globale */
+    .glow-effect {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(0, 217, 255, 0.15) 0%, rgba(0, 217, 255, 0) 70%);
+      border-radius: 50%;
+      z-index: -1;
+      filter: blur(40px);
     }
 
     header {
-      background: #000;
-      color: #00d9ff;
+      background: rgba(0, 0, 0, 0.7);
+      color: var(--neon-blue);
       padding: 16px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #00d9ff44;
-      box-shadow: 0 2px 12px #00d9ff22;
+      border-bottom: 1px solid var(--neon-blue);
+      box-shadow: 0 2px 12px rgba(0, 217, 255, 0.3);
       position: relative;
       z-index: 10;
+      backdrop-filter: blur(10px);
     }
 
     .menu-icon {
       font-size: 24px;
       cursor: pointer;
-      color: #00d9ff;
+      color: var(--neon-blue);
       text-decoration: none;
       margin-right: auto;
     }
@@ -41,31 +83,67 @@
     header img {
       height: 44px;
       border-radius: 50%;
-      border: 2px solid #00d9ff66;
-      box-shadow: 0 0 10px #00d9ff66;
+      border: 2px solid rgba(0, 217, 255, 0.4);
+      box-shadow: 0 0 15px var(--neon-blue);
+      transition: all 0.3s ease;
+    }
+
+    header img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px var(--neon-blue);
     }
 
     #topBar {
       text-align: center;
       padding: 12px;
-      background-color: #0f1f2f;
+      background-color: rgba(15, 31, 47, 0.8);
       font-size: 14px;
-      color: #00d9ffaa;
-      border-bottom: 1px solid #00d9ff33;
+      color: rgba(0, 217, 255, 0.8);
+      border-bottom: 1px solid rgba(0, 217, 255, 0.3);
       position: relative;
       z-index: 10;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      backdrop-filter: blur(5px);
+    }
+
+    #battery-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #battery-level {
+      width: 40px;
+      height: 18px;
+      border: 1px solid var(--neon-blue);
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #battery-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+      transition: width 0.5s ease;
+    }
+
+    #battery-percentage {
+      font-size: 12px;
     }
 
     main {
       max-width: 600px;
       margin: 60px auto;
       padding: 30px;
-      background: #0f0f0f;
+      background: rgba(15, 15, 15, 0.8);
       border-radius: 18px;
       text-align: center;
-      box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+      box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
       position: relative;
       z-index: 5;
+      backdrop-filter: blur(5px);
     }
 
     main::before {
@@ -75,23 +153,45 @@
       left: -2px;
       right: -2px;
       bottom: -2px;
-      background: linear-gradient(45deg, #00d9ff, #0084ff, #00d9ff);
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple), var(--neon-blue));
       border-radius: 20px;
       z-index: -1;
       animation: borderAnimation 3s linear infinite;
+      opacity: 0.7;
     }
 
     @keyframes borderAnimation {
-      0% { opacity: 0.3; }
-      50% { opacity: 0.6; }
-      100% { opacity: 0.3; }
+      0% {
+        opacity: 0.3;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
+
+      100% {
+        opacity: 0.3;
+      }
     }
 
     main h1 {
       margin-bottom: 28px;
       font-size: 26px;
-      color: #00d9ff;
-      text-shadow: 0 0 6px #00d9ff66;
+      color: var(--neon-blue);
+      text-shadow: 0 0 10px var(--neon-blue);
+      letter-spacing: 2px;
+      position: relative;
+      display: inline-block;
+    }
+
+    main h1::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
     }
 
     .btn {
@@ -102,42 +202,37 @@
       font-size: 16px;
       font-weight: bold;
       color: #000;
-      background: #00d9ff;
+      background: var(--neon-blue);
       border: none;
       border-radius: 10px;
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 0 12px #00d9ff88;
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
       position: relative;
       overflow: hidden;
+      z-index: 1;
     }
 
     .btn::before {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
-      transform: rotate(45deg);
-      transition: all 0.5s ease;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: all 0.6s ease;
     }
 
     .btn:hover::before {
-      animation: shine 1.5s infinite;
-    }
-
-    @keyframes shine {
-      0% { transform: translateX(-100%) rotate(45deg); }
-      100% { transform: translateX(100%) rotate(45deg); }
+      left: 100%;
     }
 
     .btn:hover {
       background: #00b0cc;
-      box-shadow: 0 0 20px #00d9ff;
-      transform: translateY(-2px);
+      box-shadow: 0 0 25px var(--neon-blue);
+      transform: translateY(-3px);
     }
 
     footer {
@@ -145,21 +240,21 @@
       margin-top: 40px;
       padding: 14px;
       font-size: 12px;
-      color: #00d9ff55;
+      color: rgba(0, 217, 255, 0.5);
     }
 
     audio {
       display: none;
     }
 
-    /* Styles pour la section commentaires */
+    /* Styles pour la section commentaires façon TikTok Live */
     #comments-section {
       margin-top: 40px;
       padding: 25px;
       background: rgba(15, 15, 15, 0.9);
       border-radius: 15px;
-      border: 1px solid #00d9ff44;
-      box-shadow: 0 0 20px rgba(0, 217, 255, 0.25);
+      border: 1px solid rgba(0, 217, 255, 0.3);
+      box-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
       position: relative;
       overflow: hidden;
     }
@@ -171,18 +266,23 @@
       left: 0;
       right: 0;
       height: 2px;
-      background: linear-gradient(90deg, transparent, #00d9ff, transparent);
+      background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
       animation: scanline 3s linear infinite;
     }
 
     @keyframes scanline {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(500%); }
+      0% {
+        transform: translateY(-100%);
+      }
+
+      100% {
+        transform: translateY(500%);
+      }
     }
 
     #comments-section h2 {
       margin-bottom: 25px;
-      text-shadow: 0 0 10px #00d9ff;
+      text-shadow: 0 0 10px var(--neon-blue);
       font-size: 22px;
       letter-spacing: 1px;
       position: relative;
@@ -196,18 +296,23 @@
       left: 0;
       width: 100%;
       height: 2px;
-      background: linear-gradient(90deg, transparent, #00d9ff, transparent);
+      background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+    }
+
+    #comment-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
     }
 
     #comment-form input,
     #comment-form textarea {
-      width: 100%;
       padding: 14px;
-      margin-bottom: 15px;
       background: rgba(10, 10, 10, 0.8);
-      border: 1px solid #00d9ff66;
+      border: 1px solid rgba(0, 217, 255, 0.4);
       border-radius: 8px;
-      color: #00d9ff;
+      color: var(--neon-blue);
       font-family: 'Orbitron', sans-serif;
       transition: all 0.3s ease;
     }
@@ -215,31 +320,40 @@
     #comment-form input:focus,
     #comment-form textarea:focus {
       outline: none;
-      border-color: #00d9ff;
-      box-shadow: 0 0 10px #00d9ff66;
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
     }
 
     #comment-form input::placeholder,
     #comment-form textarea::placeholder {
-      color: #00d9ff77;
+      color: rgba(0, 217, 255, 0.6);
     }
 
-    #comment-form textarea {
+    #nomDev {
+      grid-column: 1;
+    }
+
+    #numOrGmail {
+      grid-column: 2;
+    }
+
+    #commentaire {
+      grid-column: 1 / span 2;
       resize: vertical;
       min-height: 100px;
     }
 
     #comment-form button {
-      width: 100%;
+      grid-column: 1 / span 2;
       padding: 16px;
-      background: linear-gradient(45deg, #00a0cc, #00d9ff);
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
       color: #000;
       border: none;
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 0 15px #00d9ff88;
+      box-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
       letter-spacing: 1px;
       text-transform: uppercase;
       font-size: 14px;
@@ -247,45 +361,40 @@
       overflow: hidden;
     }
 
-    #comment-form button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-      transition: all 0.5s ease;
-    }
-
-    #comment-form button:hover::before {
-      left: 100%;
-    }
-
     #comment-form button:hover {
-      box-shadow: 0 0 20px #00d9ff;
+      box-shadow: 0 0 25px var(--neon-blue);
       transform: translateY(-2px);
     }
 
     #comments-container {
-      max-height: 400px;
-      overflow-y: auto;
+      height: 400px;
+      overflow: hidden;
+      position: relative;
       padding-right: 10px;
       margin-top: 25px;
-      scroll-behavior: smooth;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    #comments-wrapper {
+      position: absolute;
+      width: 100%;
+      transition: top 0.5s ease;
     }
 
     .comment {
-      padding: 20px;
-      margin-bottom: 20px;
-      background: rgba(10, 10, 10, 0.7);
+      padding: 15px;
+      margin-bottom: 15px;
+      background: rgba(10, 10, 10, 0.8);
       border-radius: 10px;
-      border: 1px solid #00d9ff33;
+      border-left: 3px solid var(--neon-blue);
       position: relative;
       animation: commentAppear 0.5s ease forwards;
       opacity: 0;
       transform: translateY(20px);
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: flex-start;
     }
 
     @keyframes commentAppear {
@@ -295,51 +404,58 @@
       }
     }
 
-    .comment::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 3px;
-      height: 100%;
-      background: linear-gradient(to bottom, #00d9ff, #0084ff);
-      border-radius: 3px 0 0 3px;
+    .comment-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+
+    .comment-content {
+      flex-grow: 1;
+      text-align: left;
     }
 
     .comment-header {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       align-items: center;
     }
 
     .comment-name {
-      color: #00d9ff;
-      text-shadow: 0 0 4px #00d9ff66;
+      color: var(--neon-blue);
+      text-shadow: 0 0 4px rgba(0, 217, 255, 0.4);
       font-weight: bold;
-      font-size: 16px;
+      font-size: 14px;
     }
 
     .comment-contact {
-      color: #00d9ffaa;
+      color: rgba(0, 217, 255, 0.7);
       font-size: 0.85em;
     }
 
     .comment-date {
-      color: #00d9ff77;
+      color: rgba(0, 217, 255, 0.5);
       font-size: 0.75em;
     }
 
-    .comment-content {
-      margin: 0 0 15px 0;
-      color: #00d9ffdd;
-      line-height: 1.5;
+    .comment-text {
+      margin: 0;
+      color: rgba(0, 217, 255, 0.9);
+      line-height: 1.4;
       font-size: 14px;
     }
 
     .comment-footer {
       display: flex;
       align-items: center;
+      margin-top: 10px;
     }
 
     .like-btn {
@@ -348,12 +464,13 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      color: #00d9ff;
+      color: rgba(0, 217, 255, 0.7);
       font-family: 'Orbitron', sans-serif;
       padding: 5px 10px;
       transition: all 0.3s ease;
       border-radius: 20px;
       background: rgba(0, 217, 255, 0.1);
+      font-size: 12px;
     }
 
     .like-btn:hover {
@@ -366,11 +483,43 @@
       color: #ff3366;
     }
 
+    .gift-icon {
+      margin-left: 10px;
+      color: gold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .gift-icon:hover {
+      transform: scale(1.2);
+    }
+
     .loading {
       text-align: center;
       padding: 30px;
-      color: #00d9ffaa;
+      color: rgba(0, 217, 255, 0.7);
       font-style: italic;
+    }
+
+    /* Style des cadeaux */
+    .gift {
+      position: absolute;
+      font-size: 24px;
+      z-index: 100;
+      pointer-events: none;
+      animation: giftFloat 4s linear forwards;
+    }
+
+    @keyframes giftFloat {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     /* Effets de particules futuristes */
@@ -381,14 +530,14 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 1;
+      z-index: -1;
     }
 
     .particle {
       position: absolute;
       width: 2px;
       height: 2px;
-      background-color: #00d9ff;
+      background-color: var(--neon-blue);
       border-radius: 50%;
       opacity: 0.5;
       animation: float 15s infinite linear;
@@ -399,54 +548,52 @@
         transform: translateY(0) translateX(0);
         opacity: 0;
       }
+
       10% {
         opacity: 0.7;
       }
+
       90% {
         opacity: 0.7;
       }
+
       100% {
         transform: translateY(-100vh) translateX(100vw);
         opacity: 0;
       }
     }
 
-    /* Style de la barre de défilement améliorée */
-    #comments-container::-webkit-scrollbar {
-      width: 8px;
+    /* Animation de défilement automatique des commentaires */
+    .auto-scroll-indicator {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      color: rgba(0, 217, 255, 0.7);
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 5px 10px;
+      border-radius: 15px;
     }
 
-    #comments-container::-webkit-scrollbar-track {
-      background: rgba(0, 217, 255, 0.1);
-      border-radius: 10px;
+    .auto-scroll-indicator i {
+      margin-right: 5px;
+      animation: pulse 2s infinite;
     }
 
-    #comments-container::-webkit-scrollbar-thumb {
-      background: linear-gradient(to bottom, #00d9ff, #0084ff);
-      border-radius: 10px;
-      box-shadow: 0 0 5px rgba(0, 217, 255, 0.5);
-    }
-
-    #comments-container::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(to bottom, #00b0cc, #0066cc);
-    }
-
-    /* Animation pour le défilement automatique */
-    @keyframes scrollComments {
+    @keyframes pulse {
       0% {
-        transform: translateY(0);
+        opacity: 0.5;
       }
+
+      50% {
+        opacity: 1;
+      }
+
       100% {
-        transform: translateY(calc(-100% + 400px));
+        opacity: 0.5;
       }
-    }
-
-    .scrolling-comments {
-      animation: scrollComments 30s linear infinite;
-    }
-
-    .scrolling-comments:hover {
-      animation-play-state: paused;
     }
 
     /* Responsive design */
@@ -455,297 +602,327 @@
         margin: 30px 15px;
         padding: 20px;
       }
-      
+
       #comments-section {
         padding: 15px;
       }
-      
+
+      #comment-form {
+        grid-template-columns: 1fr;
+      }
+
+      #nomDev,
+      #numOrGmail,
+      #commentaire {
+        grid-column: 1;
+      }
+
       .comment {
-        padding: 15px;
+        padding: 12px;
       }
     }
   </style>
 </head>
+
 <body>
-
-<!-- Effets de particules -->
-<div class="particles" id="particles"></div>
-
-<header>
-  <a href="about.html" class="menu-icon">︙</a>
-  <div>INCONNU PORTAL</div>
-  <img src="https://files.catbox.moe/c6g5ui.jpg" alt="Logo" />
-</header>
-
-<div id="topBar">
-  <span id="currentTime">00:00:00</span> | 
-  <span id="batteryLevel">Battery: ...%</span>
-</div>
-
-<main>
-  <h1>WELCOME TO INCONNU TECH</h1>
-  <a href="/pair" target="_blank" class="btn">🔗 Pair Code</a>
-  <a href="/qr" target="_blank" class="btn">📷 QR Code</a>
-  <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="btn">🚀 FORK INCONNU XD V2</a>
-  <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn">💬 Join WhatsApp</a>
-
-  <!-- Section Commentaires Live -->
-  <section id="comments-section">
-    <h2>💬 LIVE COMMENTS</h2>
-    
-    <!-- Formulaire de commentaire -->
-    <form id="comment-form">
-      <input type="text" id="nomDev" placeholder="Nom Dev" required>
-      <input type="text" id="numOrGmail" placeholder="Num ou Gmail" required>
-      <textarea id="commentaire" placeholder="Votre commentaire..." required></textarea>
-      <button type="submit">POST THE COMMENT</button>
-    </form>
-    
-    <!-- Liste des commentaires -->
-    <div id="comments-container">
-      <div class="loading">Loading comments.....</div>
+  <div class="glow-effect"></div>
+  <div class="particles" id="particles"></div>
+  <header>
+    <a href="about.html" class="menu-icon">︙</a>
+    <div>INCONNU PORTAL</div>
+    <img src="https://files.catbox.moe/c6g5ui.jpg" alt="Logo" />
+  </header>
+  <div id="topBar">
+    <span id="currentTime">00:00:00</span>
+    <div id="battery-container">
+      <div id="battery-level">
+        <div id="battery-fill"></div>
+      </div>
+      <span id="battery-percentage">...%</span>
     </div>
-  </section>
-</main>
+  </div>
+  <main>
+    <h1>WELCOME TO INCONNU TECH</h1>
+    <a href="/pair" target="_blank" class="btn">🔗 Pair Code</a>
+    <a href="/qr" target="_blank" class="btn">📷 QR Code</a>
+    <a href="https://github.com/INCONNU-BOY/INCONNU-XD-V2/fork" target="_blank" class="btn">🚀 FORK INCONNU XD V2</a>
+    <a href="https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R" target="_blank" class="btn">💬 Join WhatsApp</a>
 
-<footer>
-  POWERED BY INCONNU BOY TECH © <span id="currentYear"></span>
-</footer>
+    <!-- Section Commentaires Live -->
+    <section id="comments-section">
+      <h2>💬 LIVE COMMENTS</h2>
+      <form id="comment-form">
+        <input type="text" id="nomDev" placeholder="Nom Dev" required>
+        <input type="text" id="numOrGmail" placeholder="Num ou Gmail" required>
+        <textarea id="commentaire" placeholder="Votre commentaire..." required></textarea>
+        <button type="submit">POST THE COMMENT</button>
+      </form>
 
-<audio id="bgAudio" loop>
-  <source src="https://files.catbox.moe/m6wlp0.mp3" type="audio/mp3">
-</audio>
-
-<!-- Socket.io Client -->
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  document.getElementById("currentYear").textContent = new Date().getFullYear();
-
-  function updateClock() {
-    const now = new Date();
-    const h = String(now.getHours()).padStart(2, '0');
-    const m = String(now.getMinutes()).padStart(2, '0');
-    const s = String(now.getSeconds()).padStart(2, '0');
-    document.getElementById('currentTime').textContent = `${h}:${m}:${s}`;
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
-  if ('getBattery' in navigator) {
-    navigator.getBattery().then(battery => {
-      function updateBattery() {
-        document.getElementById('batteryLevel').textContent = "Battery: " + Math.round(battery.level * 100) + '%';
-      }
-      updateBattery();
-      battery.addEventListener('levelchange', updateBattery);
-    });
-  }
-
-  document.body.addEventListener('click', () => {
-    const audio = document.getElementById('bgAudio');
-    if (audio.paused) {
-      audio.play().catch(err => console.log("Playback blocked:", err));
-    }
-  }, { once: true });
-
-  // Effets de particules
-  function createParticles() {
-    const particlesContainer = document.getElementById('particles');
-    const particleCount = 50;
-    
-    for (let i = 0; i < particleCount; i++) {
-      const particle = document.createElement('div');
-      particle.classList.add('particle');
-      
-      // Position aléatoire
-      const posX = Math.random() * 100;
-      const posY = Math.random() * 100;
-      
-      // Taille aléatoire
-      const size = Math.random() * 3 + 1;
-      
-      // Durée d'animation aléatoire
-      const duration = Math.random() * 20 + 10;
-      
-      // Délai aléatoire
-      const delay = Math.random() * 5;
-      
-      particle.style.left = `${posX}vw`;
-      particle.style.top = `${posY}vh`;
-      particle.style.width = `${size}px`;
-      particle.style.height = `${size}px`;
-      particle.style.animationDuration = `${duration}s`;
-      particle.style.animationDelay = `${delay}s`;
-      
-      particlesContainer.appendChild(particle);
-    }
-  }
-  
-  createParticles();
-
-  // Connexion à Socket.io
-  const socket = io();
-  
-  // Éléments DOM
-  const commentForm = document.getElementById('comment-form');
-  const commentsContainer = document.getElementById('comments-container');
-  
-  // Charger les commentaires existants
-  function loadComments() {
-    commentsContainer.innerHTML = '<div class="loading">Chargement des commentaires...</div>';
-    
-    fetch('/api/comments')
-      .then(response => response.json())
-      .then(comments => {
-        commentsContainer.innerHTML = '';
-        if (comments.length === 0) {
-          commentsContainer.innerHTML = '<div class="loading">Aucun commentaire pour le moment. Soyez le premier à commenter!</div>';
-        } else {
-          comments.forEach(comment => {
-            addCommentToDOM(comment);
-          });
-        }
-      })
-      .catch(error => {
-        console.error('Erreur:', error);
-        commentsContainer.innerHTML = '<div class="loading">Erreur lors du chargement des commentaires.</div>';
-      });
-  }
-  
-  // Écouter les nouveaux commentaires
-  socket.on('new-comment', (comment) => {
-    addCommentToDOM(comment);
-    // Supprimer le message "Aucun commentaire" s'il existe
-    if (commentsContainer.querySelector('.loading')) {
-      commentsContainer.innerHTML = '';
-    }
-  });
-  
-  // Écouter les mises à jour de likes
-  socket.on('like-updated', (data) => {
-    const likeCount = document.querySelector(`.like-count[data-id="${data.id}"]`);
-    const likeBtn = document.querySelector(`.like-btn[data-id="${data.id}"]`);
-    
-    if (likeCount) {
-      likeCount.textContent = data.likes;
-      
-      // Animation du like
-      likeCount.classList.add('pulse');
-      setTimeout(() => {
-        likeCount.classList.remove('pulse');
-      }, 300);
-    }
-  });
-  
-  // Soumission du formulaire
-  commentForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const nomDev = document.getElementById('nomDev').value.trim();
-    const numOrGmail = document.getElementById('numOrGmail').value.trim();
-    const commentaire = document.getElementById('commentaire').value.trim();
-    
-    if (!nomDev || !numOrGmail || !commentaire) {
-      alert('Veuillez remplir tous les champs');
-      return;
-    }
-    
-    const commentData = {
-      nomDev: nomDev,
-      numOrGmail: numOrGmail,
-      commentaire: commentaire
-    };
-    
-    // Désactiver le bouton pendant l'envoi
-    const submitBtn = commentForm.querySelector('button');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Envoi en cours...';
-    
-    fetch('/api/comments', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(commentData)
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        // Réinitialiser le formulaire
-        commentForm.reset();
-      } else {
-        alert('Erreur: ' + (data.error || 'Une erreur est survenue'));
-      }
-    })
-    .catch(error => {
-      console.error('Erreur:', error);
-      alert('Erreur de connexion au serveur');
-    })
-    .finally(() => {
-      // Réactiver le bouton
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'POSTER LE COMMENTAIRE';
-    });
-  });
-  
-  // Fonction pour ajouter un commentaire au DOM
-  function addCommentToDOM(comment) {
-    const commentElement = document.createElement('div');
-    commentElement.classList.add('comment');
-    commentElement.dataset.id = comment._id;
-    
-    // Formater la date
-    const date = new Date(comment.createdAt || Date.now());
-    const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${String(date.getMinutes()).padStart(2, '0')}`;
-    
-    commentElement.innerHTML = `
-      <div class="comment-header">
-        <div>
-          <div class="comment-name">${escapeHtml(comment.nomDev)}</div>
-          <div class="comment-contact">${escapeHtml(comment.numOrGmail)}</div>
+      <div id="comments-container">
+        <div id="comments-wrapper">
+          <div class="loading">Loading comments.....</div>
         </div>
-        <div class="comment-date">${formattedDate}</div>
+        <div class="auto-scroll-indicator">
+          <i class="fas fa-chevron-down"></i> Auto-scroll
+        </div>
       </div>
-      <p class="comment-content">${escapeHtml(comment.commentaire)}</p>
-      <div class="comment-footer">
-        <button class="like-btn" data-id="${comment._id}">
-          ❤️ <span class="like-count" data-id="${comment._id}">${comment.likes || 0}</span>
-        </button>
-      </div>
-    `;
-    
-    // Ajouter l'événement like
-    const likeBtn = commentElement.querySelector('.like-btn');
-    likeBtn.addEventListener('click', () => {
-      likeBtn.classList.add('liked');
-      fetch(`/api/comments/${comment._id}/like`, { method: 'POST' })
-        .catch(error => console.error('Erreur:', error));
-        
-      setTimeout(() => {
-        likeBtn.classList.remove('liked');
-      }, 1000);
-    });
-    
-    // Ajouter au début de la liste pour un effet de flux
-    if (commentsContainer.firstChild) {
-      commentsContainer.insertBefore(commentElement, commentsContainer.firstChild);
-    } else {
-      commentsContainer.appendChild(commentElement);
+    </section>
+  </main>
+  <footer>
+    POWERED BY INCONNU BOY TECH © <span id="currentYear"></span>
+  </footer>
+  <audio id="bgAudio" loop>
+    <source src="https://files.catbox.moe/m6wlp0.mp3" type="audio/mp3">
+  </audio>
+
+  <script>
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+    // Mise à jour de l'heure
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('currentTime').textContent = `${h}:${m}:${s}`;
     }
-    
-    // Animation de défilement fluide
-    commentsContainer.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-  
-  // Fonction pour échapper le HTML (prévention XSS)
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
-  
-  // Charger les commentaires au démarrage
-  loadComments();
-</script>
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Mise à jour de la batterie
+    function updateBattery() {
+      if ('getBattery' in navigator) {
+        navigator.getBattery().then(battery => {
+          const percentage = Math.round(battery.level * 100);
+          document.getElementById('battery-percentage').textContent = `${percentage}%`;
+          document.getElementById('battery-fill').style.width = `${percentage}%`;
+
+          // Changement de couleur selon le niveau
+          if (percentage <= 20) {
+            document.getElementById('battery-fill').style.background = 'linear-gradient(90deg, #ff3366, #ff0066)';
+          } else if (percentage <= 50) {
+            document.getElementById('battery-fill').style.background = 'linear-gradient(90deg, #ffcc00, #ff9900)';
+          } else {
+            document.getElementById('battery-fill').style.background = 'linear-gradient(90deg, var(--neon-blue), var(--neon-purple))';
+          }
+        });
+      } else {
+        document.getElementById('battery-percentage').textContent = 'N/A';
+        document.getElementById('battery-fill').style.width = '100%';
+      }
+    }
+
+    // Mise à jour initiale et écouteur d'événements
+    updateBattery();
+    if ('getBattery' in navigator) {
+      navigator.getBattery().then(battery => {
+        battery.addEventListener('levelchange', updateBattery);
+      });
+    }
+
+    // Lecture audio au clic
+    document.body.addEventListener('click', () => {
+      const audio = document.getElementById('bgAudio');
+      if (audio.paused) {
+        audio.play().catch(err => console.log("Playback blocked:", err));
+      }
+    }, { once: true });
+
+    // Effets de particules
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 50;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.top = `${Math.random() * 100}vh`;
+        particle.style.width = `${Math.random() * 3 + 1}px`;
+        particle.style.height = particle.style.width;
+        particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    createParticles();
+
+    // Simulation de commentaires (en attendant Socket.io)
+    const sampleComments = [
+      { name: "TechMaster", contact: "@techmaster", text: "This portal is amazing! Loving the futuristic design! 🚀", likes: 12, time: "2 min ago" },
+      { name: "CodeWizard", contact: "coder@mail.com", text: "Just forked the repo. Great work team! 💻", likes: 8, time: "5 min ago" },
+      { name: "CyberNinja", contact: "+123456789", text: "The gradient effects are sick! How did you achieve this?", likes: 15, time: "10 min ago" },
+      { name: "DevGuru", contact: "dev@example.com", text: "The auto-scroll feature is just like TikTok! So cool! 👏", likes: 20, time: "15 min ago" },
+      { name: "Neo", contact: "theone@matrix.com", text: "Whoa! This is exactly what I was looking for. Amazing job!", likes: 25, time: "20 min ago" }
+    ];
+
+    // Fonction pour ajouter un commentaire au DOM
+    function addCommentToDOM(comment, isNew = false) {
+      const commentsWrapper = document.getElementById('comments-wrapper');
+      
+      // Supprimer le message de chargement s'il existe
+      if (commentsWrapper.querySelector('.loading')) {
+        commentsWrapper.innerHTML = '';
+      }
+
+      const commentElement = document.createElement('div');
+      commentElement.classList.add('comment');
+      
+      // Générer une couleur basée sur le nom pour l'avatar
+      const colors = ['#00d9ff', '#bd00ff', '#ff00c8', '#00ffa3', '#ffcc00'];
+      const colorIndex = comment.name.length % colors.length;
+      const avatarColor = colors[colorIndex];
+      
+      commentElement.innerHTML = `
+        <div class="comment-avatar" style="background: ${avatarColor};">
+          ${comment.name.charAt(0).toUpperCase()}
+        </div>
+        <div class="comment-content">
+          <div class="comment-header">
+            <div>
+              <div class="comment-name">${escapeHtml(comment.name)}</div>
+              <div class="comment-contact">${escapeHtml(comment.contact)}</div>
+            </div>
+            <div class="comment-date">${comment.time}</div>
+          </div>
+          <p class="comment-text">${escapeHtml(comment.text)}</p>
+          <div class="comment-footer">
+            <button class="like-btn"><i class="fas fa-heart"></i> <span class="like-count">${comment.likes}</span></button>
+            <div class="gift-icon" onclick="sendGift(this)"><i class="fas fa-gift"></i></div>
+          </div>
+        </div>
+      `;
+      
+      if (isNew) {
+        commentsWrapper.appendChild(commentElement);
+        // Faire défiler vers le nouveau commentaire
+        scrollToBottom();
+      } else {
+        commentsWrapper.insertBefore(commentElement, commentsWrapper.firstChild);
+      }
+      
+      // Animation d'apparition
+      setTimeout(() => {
+        commentElement.style.animation = 'commentAppear 0.5s ease forwards';
+      }, 10);
+      
+      // Gestionnaire de likes
+      const likeBtn = commentElement.querySelector('.like-btn');
+      likeBtn.addEventListener('click', function() {
+        this.classList.toggle('liked');
+        const likeCount = this.querySelector('.like-count');
+        if (this.classList.contains('liked')) {
+          likeCount.textContent = parseInt(likeCount.textContent) + 1;
+        } else {
+          likeCount.textContent = parseInt(likeCount.textContent) - 1;
+        }
+      });
+    }
+
+    // Fonction pour faire défiler vers le bas
+    function scrollToBottom() {
+      const commentsContainer = document.getElementById('comments-container');
+      const commentsWrapper = document.getElementById('comments-wrapper');
+      commentsContainer.scrollTop = commentsWrapper.scrollHeight;
+    }
+
+    // Fonction pour échapper le HTML (prévention XSS)
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Fonction pour envoyer un cadeau
+    function sendGift(element) {
+      const gifts = ['🎁', '🎉', '🎊', '🎈', '💎', '💝', '💖', '✨'];
+      const randomGift = gifts[Math.floor(Math.random() * gifts.length)];
+      
+      const giftElement = document.createElement('div');
+      giftElement.classList.add('gift');
+      giftElement.textContent = randomGift;
+      giftElement.style.left = `${Math.random() * 80 + 10}%`;
+      giftElement.style.fontSize = `${Math.random() * 20 + 20}px`;
+      document.body.appendChild(giftElement);
+      
+      // Supprimer l'élément après l'animation
+      setTimeout(() => {
+        giftElement.remove();
+      }, 4000);
+    }
+
+    // Simulation de nouveaux commentaires aléatoires
+    function simulateLiveComments() {
+      const names = ['CyberVisitor', 'TechEnthusiast', 'CodeMaster', 'DigitalExplorer', 'FutureUser'];
+      const contacts = ['@user', 'user@mail.com', '+123456789'];
+      const messages = [
+        'Love this design! So futuristic!',
+        'How can I contribute to this project?',
+        'The gradient animations are amazing!',
+        'Just shared this with my developer friends!',
+        'This is the future of web design!',
+        'The battery indicator is a nice touch!',
+        'Scrolling comments work perfectly! 👏',
+        'Where can I learn to make something like this?'
+      ];
+      
+      setInterval(() => {
+        const randomComment = {
+          name: names[Math.floor(Math.random() * names.length)],
+          contact: contacts[Math.floor(Math.random() * contacts.length)],
+          text: messages[Math.floor(Math.random() * messages.length)],
+          likes: Math.floor(Math.random() * 10),
+          time: 'Just now'
+        };
+        
+        addCommentToDOM(randomComment, true);
+      }, 5000);
+    }
+
+    // Charger les commentaires initiaux
+    function loadComments() {
+      sampleComments.forEach(comment => {
+        addCommentToDOM(comment);
+      });
+      
+      // Faire défiler vers le bas après le chargement
+      setTimeout(scrollToBottom, 500);
+      
+      // Démarrer la simulation de commentaires en direct
+      simulateLiveComments();
+    }
+
+    // Gestion de la soumission du formulaire
+    document.getElementById('comment-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('nomDev').value;
+      const contact = document.getElementById('numOrGmail').value;
+      const text = document.getElementById('commentaire').value;
+      
+      if (name && contact && text) {
+        const newComment = {
+          name,
+          contact,
+          text,
+          likes: 0,
+          time: 'Just now'
+        };
+        
+        addCommentToDOM(newComment, true);
+        
+        // Réinitialiser le formulaire
+        this.reset();
+        
+        // Simuler l'envoi au serveur
+        console.log('New comment submitted:', newComment);
+      }
+    });
+
+    // Charger les commentaires au démarrage
+    loadComments();
+  </script>
 </body>
-  </html>
+
+</html>
