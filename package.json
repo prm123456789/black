@@ -1,15 +1,16 @@
+
 {
-  "name": "DARK-NOVA-XMD-web-pair",
+  "name": "INCONNU-XD",
   "version": "0.0.1",
   "description": "A multi functional WhatsApp bot Web paircode.",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name DARK-NOVA-XMD",
-    "stop": "pm2 stop DARK-NOVA-XMD",
-    "restart": "pm2 restart DARK-NOVA-XMD"
+    "start": "pm2 start index.js --deep-monitoring --attach --name INCONNU-XD",
+    "stop": "pm2 stop INCONNU-XD",
+    "restart": "pm2 restart INCONNU-XD"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.7.18",
+    "@whiskeysockets/baileys": "github:webscrape2003/VAJIRA-BAILEY",
     "qrcode": "^1.5.4",
     "awesome-phonenumber": "^7.5.0",
     "pino": "^9.9.0",
