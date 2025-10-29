@@ -1,4 +1,3 @@
-
 {
   "name": "INCONNU-XD",
   "version": "0.0.1",
@@ -10,7 +9,7 @@
     "restart": "pm2 restart INCONNU-XD"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "github:webscrape2003/VAJIRA-BAILEY",
+    "@whiskeysockets/baileys": "github:XdKing2/Malvin-Baileys",
     "awesome-phonenumber": "^7.5.0",
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
