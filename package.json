@@ -9,7 +9,7 @@
     "restart": "pm2 restart INCONNU-XD"
   },
   "dependencies": {
-    "@whiskeysockets/baileys": "github:XdKing2/Malvin-Baileys",
+   "@whiskeysockets/baileys": "npm:angularsockets",
     "awesome-phonenumber": "^7.5.0",
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
