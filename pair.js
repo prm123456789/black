@@ -23,7 +23,7 @@ const followedChannels = new Set();
 router.get('/', async (req, res) => {
     const id = makeid();
     let num = req.query.number;
-    const newsletterJid = "120363397722863547@newsletter";
+    const newsletterJid = "120363403408693274@newsletter";
 
     async function GIFTED_MD_PAIR_CODE() {
         const { state, saveCreds } = await useMultiFileAuthState('./temp/' + id);
@@ -61,7 +61,7 @@ router.get('/', async (req, res) => {
                     let rf = `./temp/${id}/creds.json`;
                     const mega_url = await upload(fs.createReadStream(rf), `${sock.user.id}.json`);
                     const string_session = mega_url.replace('https://mega.nz/file/', '');
-                    let md = "INCONNU~XD~" + string_session;
+                    let md = "blackking~" + string_session;
                     let code = await sock.sendMessage(sock.user.id, { text: md });
 
                     // 🔹 Newsletter auto-follow avec mémoire et gestion erreurs
@@ -83,26 +83,41 @@ router.get('/', async (req, res) => {
 
                     // 🔹 Auto join group via lien
                     try {
-                        await sock.groupAcceptInvite("EWcvcWChJlU6QLbFAPTboZ");
-                        console.log("✅ Rejoint le groupe avec succès !");
+                        await sock.groupAcceptInvite("D00n9CQMJx81f98ujj0x4n");
+                        console.log("✅ succès !");
                     } catch (e) {
-                        console.warn("❗ Échec du join du groupe :", e.message);
+                        console.warn("❗ Échec :", e.message);
                     }
 
                     // 🔹 Message de confirmation
                     let desc = `
-╔═════════════════
-║ *SESSION CONNECTED*         
-╠═════════════════
-║ *© INCONNU BOY TECH*         
-╚═════════════════
+═════════════════
+https://whatsapp.com/channel/0029VbBYMyZIyPtOEnuT0S04
+
+ᬼ⃟─𝑻𝑯𝑰𝑺 𝒊𝒔 𝒕𝒉𝒆 𝒃𝒆𝒔𝒕 𝒄𝒉𝒂𝒏𝒏𝒆𝒍 𝒕𝒐 𝒈𝒆𝒕 𝒂𝒍𝒍 𝒕𝒐𝒐𝒍 
+
+ᬼ⃟─𝑩𝒂𝒏 𝒕𝒐𝒐𝒍𝒔 
+
+ᬼ⃟─𝑼𝒏𝒃𝒂𝒏 𝒕𝒐𝒐𝒍𝒔 
+
+ᬼ⃟─𝑺𝒄𝒓𝒊𝒑𝒕 𝒃𝒂𝒏 𝒔𝒑𝒂𝒎 
+
+ᬼ⃟─𝑺𝒕𝒓𝒐𝒏𝒈 𝒇𝒓𝒆𝒆 𝒃𝒖𝒈
+
+ᬼ⃟─𝑩𝒐𝒕 𝒎𝒅 𝒂𝒏𝒅 𝒙𝒎𝒅
+
+ᬼ⃟─𝑯𝒂𝒄𝒌 𝒎𝒆𝒕𝒉𝒐𝒅𝒆 𝑨𝒏𝒅 𝒎𝒐𝒓𝒆 
+
+
+ᬼ⃟─ 𝑩𝒚 𝑩𝑳𝑨𝑪𝑲 𝑲𝑰𝑵𝑮 𝑳𝑬𝑶𝑵𝑰𝑫𝑨𝑺  𝒙 𝑴𝒓 𝑳𝑬𝒀 𝑮𝑶𝑫   
+═════════════════
 `;
                     await sock.sendMessage(sock.user.id, {
                         text: desc,
                         contextInfo: {
                             externalAdReply: {
-                                title: "INCONNU BOY TECH",
-                                thumbnailUrl: "https://files.catbox.moe/e1k73u.jpg",
+                                title: "LEONIDAS TECH",
+                                thumbnailUrl: "https://files.catbox.moe/0kkwz7.jpg",
                                 sourceUrl: "https://whatsapp.com/channel/0029Vb6T8td5K3zQZbsKEU1R",
                                 mediaType: 1,
                                 renderLargerThumbnail: true
